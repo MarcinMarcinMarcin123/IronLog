@@ -29,11 +29,11 @@
   --r: 10px;
   --rl: 14px;
 }
-html,body { height:100%; }
-body { background:var(--bg); color:var(--text); font-family:'Syne',sans-serif; overflow:hidden; }
+html { height: 100%; }
+body { background:var(--bg); color:var(--text); font-family:'Syne',sans-serif; height:100%; overflow:hidden; }
 
 /* ─── APP SHELL ─── */
-.app { display:flex; height:100vh; }
+.app { display:flex; height:100%; }
 
 /* ─── LEFT SIDEBAR ─── */
 .sidebar {
@@ -347,11 +347,11 @@ table.sets td { padding:3px 3px; }
 
 /* ─── RESPONSIVE ─── */
 
-/* Prevent flex children from overflowing */
+/* Always prevent flex title from blowing out */
 .topbar-left { min-width: 0; flex: 1; }
 .topbar-title { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
-/* TABLET: narrow sidebar */
+/* TABLET */
 @media(max-width:900px) {
   .sidebar { width: 220px; min-width: 220px; }
   .topbar { padding: 14px 18px; gap: 10px; }
@@ -359,57 +359,67 @@ table.sets td { padding:3px 3px; }
   .btn { padding: 7px 11px; font-size: 0.73rem; }
 }
 
-/* MOBILE: stack vertically, bottom-nav style sidebar */
+/* ── MOBILE ─────────────────────────────────────────
+   Key fix: on mobile the app becomes a normal vertical
+   page. No height:100vh, no overflow:hidden anywhere.
+   Sidebar sits at top, content scrolls below it.
+─────────────────────────────────────────────────── */
 @media(max-width:640px) {
-  body { overflow: auto; }
+
+  /* Let the whole page scroll naturally */
+  html, body { height: auto; overflow: auto; }
 
   .app {
     flex-direction: column;
     height: auto;
-    min-height: 100vh;
+    min-height: 100svh; /* safe-area aware */
   }
 
-  /* Sidebar becomes top nav strip */
+  /* ── Sidebar: compact top panel, no fixed height ── */
   .sidebar {
     width: 100%;
     min-width: 0;
     border-right: none;
     border-bottom: 1px solid var(--border);
     flex-shrink: 0;
-    overflow: visible;
+    /* DO NOT set height/max-height here */
   }
 
-  /* Hide logo on mobile to save space */
   .logo { display: none; }
 
-  /* Tab row full width */
-  .tab-row { border-bottom: none; }
-  .tab { padding: 12px 8px; font-size: 0.68rem; }
+  .tab-row { border-bottom: 1px solid var(--border); }
+  .tab { padding: 11px 6px; font-size: 0.68rem; }
 
-  /* Sidebar panes scroll horizontally or stack */
+  /* Pane: natural height, no clipping */
   .sidebar-pane {
-    padding: 10px;
-    max-height: 240px;
-    overflow-y: auto;
+    padding: 12px;
+    overflow: visible;
+    /* no max-height — let content breathe */
   }
 
-  /* Calendar fits in sidebar strip */
-  .cal-nav { margin-bottom: 8px; }
-  .cal-month-lbl { font-size: 0.82rem; }
-  .cal-day { font-size: 0.7rem; border-radius: 5px; }
+  /* Calendar: compact but fully visible */
+  .cal-nav { margin-bottom: 10px; }
+  .cal-month-lbl { font-size: 0.85rem; }
+  .cal-grid { gap: 3px; }
+  .cal-day { font-size: 0.72rem; border-radius: 5px; }
 
-  /* Main fills remaining screen */
+  /* Plan list: natural flow */
+  #plans-list { margin-bottom: 8px; }
+
+  /* ── Main: normal block flow ── */
   .main {
-    flex: 1;
+    flex: none;
+    width: 100%;
     overflow: visible;
   }
 
-  /* Topbar: stack title and actions */
+  /* Topbar: stack title above buttons */
   .topbar {
     flex-direction: column;
     align-items: flex-start;
     gap: 10px;
-    padding: 12px 14px;
+    padding: 14px;
+    position: static; /* no sticky on mobile */
   }
 
   .topbar-left { width: 100%; }
@@ -422,58 +432,65 @@ table.sets td { padding:3px 3px; }
     flex-wrap: wrap;
     gap: 7px;
   }
-
   #top-actions .btn {
     flex: 1;
+    min-width: 120px;
     justify-content: center;
-    min-width: 100px;
     font-size: 0.75rem;
-    padding: 9px 10px;
+    padding: 10px;
   }
 
-  /* Content padding */
-  .content { padding: 12px; }
+  /* Content */
+  .content { padding: 14px; }
 
-  /* Progress bar: stack stats and bar */
+  /* Progress */
   .prog-bar-wrap {
     flex-direction: column;
     align-items: flex-start;
     gap: 10px;
     padding: 12px 14px;
+    margin-bottom: 14px;
   }
+  .stats-row { gap: 16px; }
   .prog-track { width: 100%; }
   .prog-pct { text-align: left; }
 
   /* Exercise cards */
-  .ex-top { padding: 12px 12px; gap: 8px; }
+  .ex-top { padding: 12px; gap: 8px; }
   .ex-name-inp { font-size: 0.88rem; min-width: 0; }
   .ex-body { padding: 12px; }
 
-  /* Sets table: more breathing room */
+  /* Sets */
   table.sets th { font-size: 0.55rem; padding: 0 3px 6px; }
-  table.sets td { padding: 2px 2px; }
-  .si { padding: 6px 6px; font-size: 0.78rem; }
+  table.sets td { padding: 2px; }
+  .si { padding: 8px 6px; font-size: 0.82rem; }
   .si.num { width: 26px; }
+  .rm-set { padding: 6px 8px; }
 
-  /* Assign chips wrap nicely */
+  /* Assign panel */
+  .assign-panel { padding: 12px; }
   .assign-plans { gap: 6px; }
-  .assign-chip { padding: 7px 10px; font-size: 0.75rem; }
+  .assign-chip { padding: 8px 12px; font-size: 0.78rem; }
 
-  /* Alt box */
-  .alt-toggle { padding: 10px 11px; }
-  .alt-inner { padding: 11px; }
+  /* Alt */
+  .alt-toggle { padding: 10px 12px; }
+  .alt-inner { padding: 12px; }
 
-  /* Modal full-width on mobile */
+  /* Modals */
   .modal {
-    width: calc(100vw - 32px);
+    width: calc(100vw - 28px);
     padding: 20px;
+    margin: 14px;
   }
-  .modal-btns { flex-direction: column-reverse; }
-  .modal-btns .btn { width: 100%; justify-content: center; }
+  .modal-btns { flex-direction: column-reverse; gap: 8px; }
+  .modal-btns .btn { width: 100%; justify-content: center; padding: 12px; }
 
-  /* Plan list items */
-  .plan-item { padding: 9px 10px; }
+  /* Plan chips */
+  .plan-item { padding: 10px; }
   .plan-item-name { font-size: 0.82rem; }
+
+  /* Buttons in add-ex */
+  .add-ex { padding: 14px; }
 }
 </style>
 </head>
