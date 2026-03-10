@@ -47,64 +47,6 @@ body { background:var(--bg); color:var(--text); font-family:'Syne',sans-serif; h
 .logo-mark { font-size:1.3rem; font-weight:800; color:var(--accent); letter-spacing:-0.5px; }
 .logo-sub { font-family:'Inconsolata',monospace; font-size:0.58rem; color:var(--t3); letter-spacing:3px; margin-top:2px; }
 
-/* ─── USER PANEL ─── */
-.user-panel {
-  padding:10px 14px; border-bottom:1px solid var(--border);
-  display:flex; align-items:center; gap:8px; flex-shrink:0;
-}
-.user-avatar {
-  width:28px; height:28px; border-radius:50%; object-fit:cover;
-  border:1px solid var(--border2); flex-shrink:0;
-}
-.user-avatar-placeholder {
-  width:28px; height:28px; border-radius:50%;
-  background:var(--s3); border:1px solid var(--border2);
-  display:flex; align-items:center; justify-content:center;
-  color:var(--t3); flex-shrink:0;
-}
-.user-info { flex:1; min-width:0; }
-.user-name { font-size:0.75rem; font-weight:700; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
-.user-email { font-family:'Inconsolata',monospace; font-size:0.57rem; color:var(--t3); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
-.user-action-btn {
-  background:transparent; border:none; color:var(--t3); cursor:pointer;
-  padding:4px; border-radius:6px; transition:all 0.15s; display:flex; align-items:center; flex-shrink:0;
-}
-.user-action-btn:hover { color:var(--text); }
-
-/* SYNC BAR */
-.sync-bar {
-  padding:7px 12px; border-bottom:1px solid var(--border);
-  display:flex; align-items:center; gap:6px; flex-shrink:0;
-}
-.sync-status {
-  flex:1; min-width:0;
-  font-family:'Inconsolata',monospace; font-size:0.57rem;
-  letter-spacing:1px; color:var(--t3); overflow:hidden; text-overflow:ellipsis; white-space:nowrap;
-}
-.sync-status.ok { color:var(--green); }
-.sync-status.err { color:var(--red); }
-.sync-status.busy { color:var(--blue); }
-.sync-btn {
-  background:var(--accent); border:none; border-radius:6px;
-  padding:5px 10px; color:#000;
-  font-family:'Syne',sans-serif; font-size:0.67rem; font-weight:700;
-  cursor:pointer; transition:all 0.15s; display:flex; align-items:center; gap:4px;
-  white-space:nowrap; flex-shrink:0;
-}
-.sync-btn:hover { background:#d8ff6a; }
-.sync-btn:disabled { opacity:0.4; cursor:not-allowed; }
-.sync-btn svg { width:11px; height:11px; }
-.load-btn {
-  background:transparent; border:1px solid var(--border); border-radius:6px;
-  padding:5px 9px; color:var(--t3);
-  font-family:'Syne',sans-serif; font-size:0.67rem; font-weight:700;
-  cursor:pointer; transition:all 0.15s; display:flex; align-items:center; gap:4px;
-  white-space:nowrap; flex-shrink:0;
-}
-.load-btn:hover { border-color:var(--blue); color:var(--blue); }
-.load-btn:disabled { opacity:0.4; cursor:not-allowed; }
-.load-btn svg { width:11px; height:11px; }
-
 /* TAB SWITCHER */
 .tab-row {
   display:flex; border-bottom:1px solid var(--border); flex-shrink:0;
@@ -228,24 +170,6 @@ body { background:var(--bg); color:var(--text); font-family:'Syne',sans-serif; h
 }
 .empty-title { font-size:1rem; font-weight:700; color:var(--t2); }
 .empty-sub { font-size:0.82rem; color:var(--t3); max-width:260px; line-height:1.6; }
-
-/* LOGIN SCREEN */
-.login-screen {
-  display:flex; flex-direction:column; align-items:center; justify-content:center;
-  height:100%; gap:20px; padding:40px;
-}
-.login-logo { font-size:2.2rem; font-weight:800; color:var(--accent); letter-spacing:-1px; }
-.login-sub { font-family:'Inconsolata',monospace; font-size:0.65rem; color:var(--t3); letter-spacing:3px; }
-.login-desc { font-size:0.85rem; color:var(--t2); text-align:center; max-width:300px; line-height:1.7; margin-top:6px; }
-.google-btn {
-  display:flex; align-items:center; gap:10px;
-  background:#fff; color:#1f1f1f; border:none; border-radius:10px;
-  padding:12px 22px; font-size:0.88rem; font-weight:700; font-family:'Syne',sans-serif;
-  cursor:pointer; transition:all 0.15s; margin-top:8px;
-}
-.google-btn:hover { background:#f0f0f0; transform:translateY(-1px); }
-.google-btn svg { width:20px; height:20px; flex-shrink:0; }
-.login-note { font-family:'Inconsolata',monospace; font-size:0.6rem; color:var(--t3); text-align:center; max-width:280px; line-height:1.6; }
 
 /* PROGRESS */
 .prog-bar-wrap {
@@ -380,7 +304,7 @@ table.sets td { padding:3px 3px; }
 .add-ex:hover { border-color:var(--accent); color:var(--accent); }
 .add-ex svg { width:15px; height:15px; }
 
-/* ─── ASSIGN PANEL ─── */
+/* ─── ASSIGN PANEL (appears when cal day selected) ─── */
 .assign-panel {
   background:var(--s2); border:1px solid var(--border); border-radius:var(--rl);
   padding:16px; margin-bottom:20px;
@@ -394,24 +318,6 @@ table.sets td { padding:3px 3px; }
 .assign-chip:hover { border-color:var(--accent); color:var(--accent); }
 .assign-chip.active-chip { background:var(--accent); color:#000; border-color:var(--accent); }
 .assign-none { font-size:0.78rem; color:var(--t3); padding:4px 0; }
-
-/* ─── TOAST ─── */
-.toast-wrap {
-  position:fixed; bottom:20px; right:20px; z-index:500;
-  display:flex; flex-direction:column; gap:8px; pointer-events:none;
-}
-.toast {
-  background:var(--s2); border:1px solid var(--border2);
-  border-radius:10px; padding:10px 15px;
-  font-size:0.8rem; font-weight:700;
-  display:flex; align-items:center; gap:8px;
-  animation:toastIn 0.2s ease; pointer-events:all;
-  max-width:300px;
-}
-.toast.ok { border-color:rgba(61,220,132,0.4); color:var(--green); }
-.toast.err { border-color:rgba(255,85,85,0.4); color:var(--red); }
-.toast.info { border-color:rgba(90,171,255,0.4); color:var(--blue); }
-@keyframes toastIn { from { opacity:0; transform:translateX(10px); } to { opacity:1; transform:translateX(0); } }
 
 /* ─── MODALS ─── */
 .overlay {
@@ -442,9 +348,12 @@ table.sets td { padding:3px 3px; }
 ::-webkit-scrollbar-thumb { background:var(--border); border-radius:2px; }
 
 /* ─── RESPONSIVE ─── */
+
+/* Always prevent flex title from blowing out */
 .topbar-left { min-width: 0; flex: 1; }
 .topbar-title { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
+/* TABLET */
 @media(max-width:900px) {
   .sidebar { width: 220px; min-width: 220px; }
   .topbar { padding: 14px 18px; gap: 10px; }
@@ -452,113 +361,149 @@ table.sets td { padding:3px 3px; }
   .btn { padding: 7px 11px; font-size: 0.73rem; }
 }
 
+/* ── MOBILE ─────────────────────────────────────────
+   Key fix: on mobile the app becomes a normal vertical
+   page. No height:100vh, no overflow:hidden anywhere.
+   Sidebar sits at top, content scrolls below it.
+─────────────────────────────────────────────────── */
 @media(max-width:640px) {
+
+  /* Let the whole page scroll naturally */
   html, body { height: auto; overflow: auto; }
-  .app { flex-direction: column; height: auto; min-height: 100svh; }
-  .sidebar { width: 100%; min-width: 0; border-right: none; border-bottom: 1px solid var(--border); flex-shrink: 0; }
+
+  .app {
+    flex-direction: column;
+    height: auto;
+    min-height: 100svh; /* safe-area aware */
+  }
+
+  /* ── Sidebar: compact top panel, no fixed height ── */
+  .sidebar {
+    width: 100%;
+    min-width: 0;
+    border-right: none;
+    border-bottom: 1px solid var(--border);
+    flex-shrink: 0;
+    /* DO NOT set height/max-height here */
+  }
+
   .logo { display: none; }
+
   .tab-row { border-bottom: 1px solid var(--border); }
   .tab { padding: 11px 6px; font-size: 0.68rem; }
-  .sidebar-pane { padding: 12px; overflow: visible; }
+
+  /* Pane: natural height, no clipping */
+  .sidebar-pane {
+    padding: 12px;
+    overflow: visible;
+    /* no max-height — let content breathe */
+  }
+
+  /* Calendar: compact but fully visible */
   .cal-nav { margin-bottom: 10px; }
   .cal-month-lbl { font-size: 0.85rem; }
   .cal-grid { gap: 3px; }
   .cal-day { font-size: 0.72rem; border-radius: 5px; }
+
+  /* Plan list: natural flow */
   #plans-list { margin-bottom: 8px; }
-  .main { flex: none; width: 100%; overflow: visible; }
-  .topbar { flex-direction: column; align-items: flex-start; gap: 10px; padding: 14px; position: static; }
+
+  /* ── Main: normal block flow ── */
+  .main {
+    flex: none;
+    width: 100%;
+    overflow: visible;
+  }
+
+  /* Topbar: stack title above buttons */
+  .topbar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 14px;
+    position: static; /* no sticky on mobile */
+  }
+
   .topbar-left { width: 100%; }
   .topbar-title { font-size: 1rem; white-space: normal; }
   .topbar-date { font-size: 0.6rem; letter-spacing: 1px; }
-  #top-actions { width: 100%; display: flex; flex-wrap: wrap; gap: 7px; }
-  #top-actions .btn { flex: 1; min-width: 120px; justify-content: center; font-size: 0.75rem; padding: 10px; }
+
+  #top-actions {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+  }
+  #top-actions .btn {
+    flex: 1;
+    min-width: 120px;
+    justify-content: center;
+    font-size: 0.75rem;
+    padding: 10px;
+  }
+
+  /* Content */
   .content { padding: 14px; }
-  .prog-bar-wrap { flex-direction: column; align-items: flex-start; gap: 10px; padding: 12px 14px; margin-bottom: 14px; }
+
+  /* Progress */
+  .prog-bar-wrap {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 12px 14px;
+    margin-bottom: 14px;
+  }
   .stats-row { gap: 16px; }
   .prog-track { width: 100%; }
   .prog-pct { text-align: left; }
+
+  /* Exercise cards */
   .ex-top { padding: 12px; gap: 8px; }
   .ex-name-inp { font-size: 0.88rem; min-width: 0; }
   .ex-body { padding: 12px; }
+
+  /* Sets */
   table.sets th { font-size: 0.55rem; padding: 0 3px 6px; }
   table.sets td { padding: 2px; }
   .si { padding: 8px 6px; font-size: 0.82rem; }
   .si.num { width: 26px; }
   .rm-set { padding: 6px 8px; }
+
+  /* Assign panel */
   .assign-panel { padding: 12px; }
   .assign-plans { gap: 6px; }
   .assign-chip { padding: 8px 12px; font-size: 0.78rem; }
+
+  /* Alt */
   .alt-toggle { padding: 10px 12px; }
   .alt-inner { padding: 12px; }
-  .modal { width: calc(100vw - 28px); padding: 20px; margin: 14px; }
+
+  /* Modals */
+  .modal {
+    width: calc(100vw - 28px);
+    padding: 20px;
+    margin: 14px;
+  }
   .modal-btns { flex-direction: column-reverse; gap: 8px; }
   .modal-btns .btn { width: 100%; justify-content: center; padding: 12px; }
+
+  /* Plan chips */
   .plan-item { padding: 10px; }
   .plan-item-name { font-size: 0.82rem; }
+
+  /* Buttons in add-ex */
   .add-ex { padding: 14px; }
-  .sync-bar { flex-wrap: wrap; gap: 6px; }
-  .toast-wrap { bottom: 12px; right: 12px; left: 12px; }
-  .toast { max-width: 100%; }
 }
 </style>
 </head>
 <body>
-
-<!-- TOAST CONTAINER -->
-<div class="toast-wrap" id="toast-wrap"></div>
-
-<!-- LOGIN SCREEN (shown when not logged in) -->
-<div id="login-screen" style="display:none; height:100%;">
-  <div class="login-screen">
-    <div>
-      <div class="login-logo">IronLog</div>
-      <div class="login-sub">WORKOUT TRACKER</div>
-    </div>
-    <div class="login-desc">Zaloguj się przez Google, aby synchronizować treningi między urządzeniami.</div>
-    <button class="google-btn" onclick="signInWithGoogle()">
-      <!-- Google G logo -->
-      <svg viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.18 1.48-4.97 2.36-8.16 2.36-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/><path fill="none" d="M0 0h48v48H0z"/></svg>
-      Zaloguj się przez Google
-    </button>
-    <div class="login-note">Twoje dane są przechowywane bezpiecznie w Firebase.<br>Możesz korzystać z IronLog na wielu urządzeniach.</div>
-  </div>
-</div>
-
-<!-- MAIN APP -->
-<div class="app" id="app-shell" style="display:none;">
+<div class="app">
 
 <!-- ══ SIDEBAR ══════════════════════════ -->
 <aside class="sidebar">
   <div class="logo">
     <div class="logo-mark">IronLog</div>
     <div class="logo-sub">WORKOUT TRACKER</div>
-  </div>
-
-  <!-- USER PANEL -->
-  <div class="user-panel" id="user-panel">
-    <div class="user-avatar-placeholder" id="user-avatar-wrap">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
-    </div>
-    <div class="user-info">
-      <div class="user-name" id="user-name">—</div>
-      <div class="user-email" id="user-email">—</div>
-    </div>
-    <button class="user-action-btn" onclick="signOut()" title="Wyloguj">
-      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
-    </button>
-  </div>
-
-  <!-- SYNC BAR -->
-  <div class="sync-bar">
-    <div class="sync-status" id="sync-status">LOKALNIE</div>
-    <button class="load-btn" id="load-btn" onclick="loadFromCloud()" title="Wczytaj z chmury">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-3.5"/></svg>
-      Wczytaj
-    </button>
-    <button class="sync-btn" id="sync-btn" onclick="saveToCloud()">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-      Zapisz
-    </button>
   </div>
 
   <div class="tab-row">
@@ -640,51 +585,17 @@ table.sets td { padding:3px 3px; }
   </div>
 </div>
 
-<!-- MODAL: CONFLICT -->
-<div class="overlay" id="modal-conflict">
-  <div class="modal">
-    <div class="modal-title">Konflikt danych</div>
-    <div class="modal-sub" id="conflict-sub"></div>
-    <div class="modal-btns">
-      <button class="btn btn-ghost" onclick="resolveConflict('local')">Zachowaj lokalne</button>
-      <button class="btn btn-accent" onclick="resolveConflict('cloud')">Wczytaj z chmury</button>
-    </div>
-  </div>
-</div>
-
-<!-- Firebase SDKs (compat / CDN) -->
-<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
-
 <script>
 // ════════════════════════════════════════
-// FIREBASE INIT
-// ════════════════════════════════════════
-const firebaseConfig = {
-  apiKey: "AIzaSyDH5VjIOEe513fzZV3iOSwS3Yqjpo8bt9w",
-  authDomain: "ironlog-68d27.firebaseapp.com",
-  projectId: "ironlog-68d27",
-  storageBucket: "ironlog-68d27.firebasestorage.app",
-  messagingSenderId: "366786380389",
-  appId: "1:366786380389:web:262742bf1714f289237c8c",
-  measurementId: "G-YDZBFVWJ2N"
-};
-
-firebase.initializeApp(firebaseConfig);
-const auth = firebase.auth();
-const db = firebase.firestore();
-
-let currentUser = null;
-let pendingCloudData = null; // used for conflict resolution
-
-// ════════════════════════════════════════
 // STATE
+// state.plans = [ { id, name, exercises:[] } ]
+// state.calendar = { "2025-03-10": planId | null }
 // ════════════════════════════════════════
 let state = loadState() || { plans: [], calendar: {} };
 let idCounter = state.plans.length ? Math.max(...state.plans.map(p=>p.id))+1 : 1;
 let exIdCounter = 1;
 
+// Ensure all exercises have ids
 state.plans.forEach(p => p.exercises.forEach(e => {
   if (!e.id) e.id = exIdCounter++;
   else if (e.id >= exIdCounter) exIdCounter = e.id+1;
@@ -694,9 +605,9 @@ function saveState() { try { localStorage.setItem('ironlog_v3', JSON.stringify(s
 function loadState() { try { const s=localStorage.getItem('ironlog_v3'); return s?JSON.parse(s):null; } catch(e){return null;} }
 
 // VIEW STATE
-let activeTab = 'plans';
-let selectedPlanId = null;
-let selectedCalDate = null;
+let activeTab = 'plans';       // 'plans' | 'cal'
+let selectedPlanId = null;     // viewing a plan from library
+let selectedCalDate = null;    // viewing a calendar day
 let renamingPlanId = null;
 
 const now = new Date();
@@ -710,188 +621,6 @@ const MONTHS = ['Styczeń','Luty','Marzec','Kwiecień','Maj','Czerwiec','Lipiec'
 const DOWS = ['Pn','Wt','Śr','Cz','Pt','So','Nd'];
 
 function esc(s){ return String(s||'').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
-
-// ════════════════════════════════════════
-// TOAST
-// ════════════════════════════════════════
-function toast(msg, type='info', duration=3000) {
-  const wrap = document.getElementById('toast-wrap');
-  const el = document.createElement('div');
-  el.className = `toast ${type}`;
-  const icons = {
-    ok: `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>`,
-    err: `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>`,
-    info: `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>`
-  };
-  el.innerHTML = (icons[type]||icons.info) + msg;
-  wrap.appendChild(el);
-  setTimeout(()=>{ el.style.opacity='0'; el.style.transform='translateX(10px)'; el.style.transition='all 0.2s'; setTimeout(()=>el.remove(),200); }, duration);
-}
-
-// ════════════════════════════════════════
-// AUTH
-// ════════════════════════════════════════
-function signInWithGoogle() {
-  const provider = new firebase.auth.GoogleAuthProvider();
-  auth.signInWithPopup(provider).catch(err => {
-    alert('Błąd logowania: ' + err.message);
-  });
-}
-
-function signOut() {
-  auth.signOut();
-}
-
-function initApp(user) {
-  currentUser = user;
-  document.getElementById('login-screen').style.display = 'none';
-  document.getElementById('app-shell').style.display = 'flex';
-  document.getElementById('user-name').textContent = user.displayName || 'Użytkownik';
-  document.getElementById('user-email').textContent = user.email || '';
-  const avatarWrap = document.getElementById('user-avatar-wrap');
-  if (user.photoURL) {
-    avatarWrap.outerHTML = `<img class="user-avatar" id="user-avatar-wrap" src="${user.photoURL}" alt="">`;
-  }
-  setSyncStatus('LOKALNIE', '');
-  renderPlansList();
-  renderMain();
-  renderCalendar();
-  autoLoadOnLogin();
-}
-
-auth.onAuthStateChanged(user => {
-  if (user) {
-    initApp(user);
-  } else {
-    currentUser = null;
-    document.getElementById('login-screen').style.display = 'flex';
-    document.getElementById('app-shell').style.display = 'none';
-  }
-});
-
-// ════════════════════════════════════════
-// FIRESTORE SYNC
-// ════════════════════════════════════════
-function userDocRef() {
-  if (!currentUser) return null;
-  return db.collection('users').doc(currentUser.uid).collection('data').doc('ironlog');
-}
-
-function setSyncStatus(text, type) {
-  const el = document.getElementById('sync-status');
-  el.textContent = text;
-  el.className = 'sync-status' + (type ? ' ' + type : '');
-}
-
-async function saveToCloud() {
-  if (!currentUser) { toast('Musisz być zalogowany.', 'err'); return; }
-  const btn = document.getElementById('sync-btn');
-  btn.disabled = true;
-  setSyncStatus('ZAPISUJĘ...', 'busy');
-  try {
-    const payload = {
-      state: JSON.stringify(state),
-      savedAt: firebase.firestore.FieldValue.serverTimestamp(),
-      savedBy: currentUser.email
-    };
-    await userDocRef().set(payload);
-    const now = new Date();
-    const timeStr = now.toLocaleTimeString('pl-PL', {hour:'2-digit', minute:'2-digit'});
-    setSyncStatus(`ZAPISANO ${timeStr}`, 'ok');
-    toast('Dane zapisane w chmurze ✓', 'ok');
-  } catch(err) {
-    setSyncStatus('BŁĄD ZAPISU', 'err');
-    toast('Błąd zapisu: ' + err.message, 'err', 5000);
-  } finally {
-    btn.disabled = false;
-  }
-}
-
-async function loadFromCloud() {
-  if (!currentUser) { toast('Musisz być zalogowany.', 'err'); return; }
-  const btn = document.getElementById('load-btn');
-  btn.disabled = true;
-  setSyncStatus('WCZYTUJĘ...', 'busy');
-  try {
-    const doc = await userDocRef().get();
-    if (!doc.exists) {
-      setSyncStatus('BRAK DANYCH', '');
-      toast('Brak danych w chmurze. Zapisz najpierw swoje plany.', 'info', 4000);
-      return;
-    }
-    const cloudState = JSON.parse(doc.data().state);
-    const savedAt = doc.data().savedAt?.toDate();
-    const savedAtStr = savedAt ? savedAt.toLocaleString('pl-PL') : 'nieznana data';
-
-    // Check if local state has content that might differ
-    const hasLocal = state.plans.length > 0;
-    const hasCloud = cloudState.plans.length > 0;
-
-    if (hasLocal && hasCloud) {
-      // Show conflict modal
-      pendingCloudData = cloudState;
-      document.getElementById('conflict-sub').textContent =
-        `Masz lokalne dane (${state.plans.length} planów) oraz dane w chmurze (${cloudState.plans.length} planów, zapisane: ${savedAtStr}). Które chcesz zachować?`;
-      document.getElementById('modal-conflict').classList.add('open');
-      setSyncStatus('KONFLIKT', 'err');
-    } else {
-      applyCloudState(cloudState);
-      const timeStr = savedAt ? savedAt.toLocaleTimeString('pl-PL', {hour:'2-digit', minute:'2-digit'}) : '';
-      setSyncStatus(`WCZYTANO ${timeStr}`, 'ok');
-      toast('Dane wczytane z chmury ✓', 'ok');
-    }
-  } catch(err) {
-    setSyncStatus('BŁĄD ODCZYTU', 'err');
-    toast('Błąd wczytywania: ' + err.message, 'err', 5000);
-  } finally {
-    btn.disabled = false;
-  }
-}
-
-async function autoLoadOnLogin() {
-  // Only auto-load if local storage is empty
-  const hasLocal = state.plans.length > 0;
-  if (hasLocal) return; // user has local data, don't auto-overwrite
-  try {
-    const doc = await userDocRef().get();
-    if (doc.exists) {
-      const cloudState = JSON.parse(doc.data().state);
-      applyCloudState(cloudState);
-      setSyncStatus('WCZYTANO Z CHMURY', 'ok');
-      toast('Wczytano dane z chmury ✓', 'ok');
-    }
-  } catch(e) { /* silent */ }
-}
-
-function applyCloudState(cloudState) {
-  state = cloudState;
-  // Recalculate counters
-  idCounter = state.plans.length ? Math.max(...state.plans.map(p=>p.id))+1 : 1;
-  exIdCounter = 1;
-  state.plans.forEach(p => p.exercises.forEach(e => {
-    if (!e.id) e.id = exIdCounter++;
-    else if (e.id >= exIdCounter) exIdCounter = e.id+1;
-  }));
-  saveState();
-  selectedPlanId = null;
-  selectedCalDate = null;
-  renderPlansList();
-  renderMain();
-  renderCalendar();
-}
-
-function resolveConflict(choice) {
-  closeModal('modal-conflict');
-  if (choice === 'cloud' && pendingCloudData) {
-    applyCloudState(pendingCloudData);
-    setSyncStatus('WCZYTANO Z CHMURY', 'ok');
-    toast('Dane z chmury wczytane ✓', 'ok');
-  } else {
-    setSyncStatus('ZACHOWANO LOKALNE', 'ok');
-    toast('Zachowano dane lokalne.', 'info');
-  }
-  pendingCloudData = null;
-}
 
 // ── TAB ────────────────────────────────
 function switchTab(t) {
@@ -973,6 +702,7 @@ function selectCalDay(key) {
   renderCalendar();
   renderPlansList();
   renderMain();
+  // switch to cal pane if not already
   if(activeTab!=='cal') switchTab('cal');
 }
 
@@ -1006,6 +736,8 @@ function renderMain() {
     }
 
     let html = '';
+
+    // Assign panel
     html += `<div class="assign-panel">
       <div class="assign-title">PRZYPISZ PLAN DO TEGO DNIA</div>
       <div class="assign-plans">`;
@@ -1057,6 +789,7 @@ function renderMain() {
     dateEl.textContent = 'BIBLIOTEKA PLANÓW';
     titleEl.textContent = plan.name;
 
+    // Count how many calendar days use this plan
     const usedDays = Object.values(state.calendar).filter(id=>id===plan.id).length;
     badgeEl.style.display = usedDays ? 'flex' : 'none';
     badgeEl.innerHTML = `<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>Przypisany do ${usedDays} ${usedDays===1?'dnia':'dni'}`;
@@ -1212,9 +945,10 @@ function updAltSet(pid,eid,si,f,v) { const e=getEx(pid,eid); if(e?.alt?.sets?.[s
 function addAltSet(pid,eid) { const e=getEx(pid,eid); if(e){if(!e.alt)e.alt={};if(!e.alt.sets)e.alt.sets=[];e.alt.sets.push({reps:'',weight:''});} saveState(); renderMain(); }
 function rmAltSet(pid,eid,si) { const e=getEx(pid,eid); if(e?.alt?.sets?.length>1) e.alt.sets.splice(si,1); saveState(); renderMain(); }
 
+// ── CALENDAR ASSIGNMENT ──
 function assignDay(dateKey, planId) {
   if(state.calendar[dateKey]===planId) {
-    delete state.calendar[dateKey];
+    delete state.calendar[dateKey]; // toggle off
   } else {
     state.calendar[dateKey] = planId;
   }
@@ -1278,6 +1012,11 @@ function closeModal(id) { document.getElementById(id).classList.remove('open'); 
 document.querySelectorAll('.overlay').forEach(o=>o.addEventListener('click',e=>{ if(e.target===o) o.classList.remove('open'); }));
 
 function goLink(url) { if(url&&(url.startsWith('http://')||url.startsWith('https://'))) window.open(url,'_blank'); }
+
+// ── INIT ──
+renderPlansList();
+renderMain();
+renderCalendar();
 </script>
 </body>
 </html>
