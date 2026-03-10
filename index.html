@@ -733,7 +733,9 @@ function toast(msg, type='info', duration=3000) {
 // ════════════════════════════════════════
 function signInWithGoogle() {
   const provider = new firebase.auth.GoogleAuthProvider();
-  auth.signInWithRedirect(provider);
+  auth.signInWithPopup(provider).catch(err => {
+    alert('Błąd logowania: ' + err.message);
+  });
 }
 
 function signOut() {
@@ -756,17 +758,6 @@ function initApp(user) {
   renderCalendar();
   autoLoadOnLogin();
 }
-
-// Handle redirect result first, then listen for auth state
-auth.getRedirectResult().then(result => {
-  if (result && result.user) {
-    initApp(result.user);
-  }
-}).catch(err => {
-  if (err.code !== 'auth/no-current-user') {
-    alert('Błąd logowania: ' + err.message);
-  }
-});
 
 auth.onAuthStateChanged(user => {
   if (user) {
