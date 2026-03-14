@@ -1,0 +1,13 @@
+version: '3.8'
+
+services:
+  ironlog:
+    build: .
+    container_name: ironlog
+    ports:
+      - "3001:3001"
+    volumes:
+      - ./data:/app/data   # dane bazy SQLite przeżyją restart
+    restart: unless-stopped
+    environment:
+      - NODE_ENV=production

@@ -494,9 +494,107 @@ table.sets td { padding:3px 3px; }
   /* Buttons in add-ex */
   .add-ex { padding: 14px; }
 }
+
+/* ─── AUTH SCREEN ─── */
+.auth-screen {
+  position:fixed; inset:0; background:var(--bg);
+  z-index:999; display:flex; align-items:center; justify-content:center;
+}
+.auth-box {
+  background:var(--s1); border:1px solid var(--border2);
+  border-radius:var(--rl); padding:36px 32px; width:380px; max-width:calc(100vw - 32px);
+}
+.auth-logo { font-size:1.6rem; font-weight:800; color:var(--accent); letter-spacing:-0.5px; margin-bottom:4px; }
+.auth-sub  { font-family:'Inconsolata',monospace; font-size:0.6rem; color:var(--t3); letter-spacing:3px; margin-bottom:28px; }
+.auth-tabs { display:flex; gap:0; margin-bottom:24px; background:var(--s2); border-radius:8px; padding:3px; }
+.auth-tab  {
+  flex:1; padding:8px; text-align:center; cursor:pointer;
+  font-size:0.75rem; font-weight:700; color:var(--t3);
+  border-radius:6px; transition:all 0.15s;
+}
+.auth-tab.active { background:var(--s4); color:var(--text); }
+.auth-lbl  { font-family:'Inconsolata',monospace; font-size:0.6rem; letter-spacing:2px; color:var(--t3); margin-bottom:6px; }
+.auth-inp  {
+  width:100%; background:var(--s2); border:1px solid var(--border); border-radius:8px;
+  padding:11px 14px; color:var(--text); font-family:'Syne',sans-serif;
+  font-size:0.9rem; font-weight:600; outline:none; transition:border-color 0.15s;
+  margin-bottom:14px;
+}
+.auth-inp:focus { border-color:var(--accent); }
+.auth-btn  {
+  width:100%; background:var(--accent); color:#000; border:none;
+  border-radius:8px; padding:12px; font-family:'Syne',sans-serif;
+  font-size:0.88rem; font-weight:800; cursor:pointer; transition:all 0.15s;
+  margin-top:4px;
+}
+.auth-btn:hover { background:#d8ff6a; }
+.auth-btn:disabled { opacity:0.5; cursor:not-allowed; }
+.auth-err  {
+  background:var(--red-dim); color:var(--red); border:1px solid rgba(255,85,85,0.2);
+  border-radius:7px; padding:9px 12px; font-size:0.78rem; margin-bottom:14px;
+  display:none;
+}
+.auth-err.show { display:block; }
+
+/* ─── SYNC INDICATOR ─── */
+.sync-bar {
+  position:fixed; bottom:16px; right:16px; z-index:200;
+  background:var(--s2); border:1px solid var(--border2);
+  border-radius:9px; padding:7px 13px;
+  font-family:'Inconsolata',monospace; font-size:0.68rem;
+  display:flex; align-items:center; gap:7px;
+  opacity:0; transition:opacity 0.3s; pointer-events:none;
+}
+.sync-bar.show { opacity:1; }
+.sync-dot { width:7px; height:7px; border-radius:50%; background:var(--t3); flex-shrink:0; }
+.sync-dot.syncing { background:var(--blue); animation:pulse 1s infinite; }
+.sync-dot.ok      { background:var(--green); }
+.sync-dot.err     { background:var(--red); }
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
+
+/* ─── USER CHIP in logo ─── */
+.user-chip {
+  display:flex; align-items:center; gap:7px; margin-top:8px;
+  padding:6px 10px; background:var(--s2); border:1px solid var(--border);
+  border-radius:7px; cursor:pointer; transition:all 0.15s;
+}
+.user-chip:hover { border-color:var(--red); }
+.user-chip-name { font-family:'Inconsolata',monospace; font-size:0.7rem; color:var(--t2); flex:1; }
+.user-chip-out  { font-family:'Inconsolata',monospace; font-size:0.6rem; color:var(--t3); letter-spacing:1px; }
+
 </style>
 </head>
 <body>
+
+<!-- ══ AUTH SCREEN ══════════════════════ -->
+<div class="auth-screen" id="auth-screen">
+  <div class="auth-box">
+    <div class="auth-logo">IronLog</div>
+    <div class="auth-sub">WORKOUT TRACKER</div>
+    <div class="auth-tabs">
+      <div class="auth-tab active" id="atab-login" onclick="authSwitchTab('login')">Zaloguj się</div>
+      <div class="auth-tab" id="atab-register" onclick="authSwitchTab('register')">Zarejestruj</div>
+    </div>
+    <div class="auth-err" id="auth-err"></div>
+    <div class="auth-lbl">NAZWA UŻYTKOWNIKA</div>
+    <input class="auth-inp" id="auth-user" type="text" placeholder="twoja_nazwa" autocomplete="username"
+      onkeydown="if(event.key==='Enter')document.getElementById('auth-pass').focus()">
+    <div class="auth-lbl">HASŁO</div>
+    <input class="auth-inp" id="auth-pass" type="password" placeholder="••••••••" autocomplete="current-password"
+      onkeydown="if(event.key==='Enter')authSubmit()">
+    <div class="auth-lbl" id="auth-pass2-lbl" style="display:none">POWTÓRZ HASŁO</div>
+    <input class="auth-inp" id="auth-pass2" type="password" placeholder="••••••••" style="display:none"
+      onkeydown="if(event.key==='Enter')authSubmit()">
+    <button class="auth-btn" id="auth-submit-btn" onclick="authSubmit()">Zaloguj się</button>
+  </div>
+</div>
+
+<!-- ══ SYNC INDICATOR ══════════════════ -->
+<div class="sync-bar" id="sync-bar">
+  <div class="sync-dot" id="sync-dot"></div>
+  <span id="sync-msg">Synchronizacja...</span>
+</div>
+
 <div class="app">
 
 <!-- ══ SIDEBAR ══════════════════════════ -->
@@ -504,6 +602,8 @@ table.sets td { padding:3px 3px; }
   <div class="logo">
     <div class="logo-mark">IronLog</div>
     <div class="logo-sub">WORKOUT TRACKER</div>
+
+    <div id="user-chip-wrap"></div>
   </div>
 
   <div class="tab-row">
@@ -586,6 +686,200 @@ table.sets td { padding:3px 3px; }
 </div>
 
 <script>
+
+// ════════════════════════════════════════
+// CONFIG – zmień na swój adres Tailscale!
+// ════════════════════════════════════════
+const API_BASE = window.location.origin; // działa automatycznie gdy apka jest na tym samym serwerze
+// Jeśli otwierasz plik lokalnie (file://), ustaw:
+// const API_BASE = 'http://TWOJ_ADRES_TAILSCALE:3001';
+
+// ════════════════════════════════════════
+// AUTH STATE
+// ════════════════════════════════════════
+let authToken = localStorage.getItem('ironlog_token') || null;
+let authUsername = localStorage.getItem('ironlog_user') || null;
+
+// ── Auth tab switch ──
+let authTab = 'login';
+function authSwitchTab(t) {
+  authTab = t;
+  document.getElementById('atab-login').classList.toggle('active', t==='login');
+  document.getElementById('atab-register').classList.toggle('active', t==='register');
+  document.getElementById('auth-submit-btn').textContent = t==='login' ? 'Zaloguj się' : 'Zarejestruj';
+  document.getElementById('auth-pass2-lbl').style.display = t==='register' ? '' : 'none';
+  document.getElementById('auth-pass2').style.display = t==='register' ? '' : 'none';
+  document.getElementById('auth-err').classList.remove('show');
+}
+
+function showAuthErr(msg) {
+  const el = document.getElementById('auth-err');
+  el.textContent = msg;
+  el.classList.add('show');
+}
+
+async function authSubmit() {
+  const username = document.getElementById('auth-user').value.trim();
+  const password = document.getElementById('auth-pass').value;
+  const btn = document.getElementById('auth-submit-btn');
+
+  if (!username || !password) { showAuthErr('Wypełnij wszystkie pola'); return; }
+
+  if (authTab === 'register') {
+    const pass2 = document.getElementById('auth-pass2').value;
+    if (password !== pass2) { showAuthErr('Hasła nie są identyczne'); return; }
+  }
+
+  btn.disabled = true;
+  btn.textContent = '...';
+
+  try {
+    const endpoint = authTab === 'login' ? '/api/login' : '/api/register';
+    const res = await fetch(API_BASE + endpoint, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ username, password })
+    });
+    const data = await res.json();
+
+    if (!res.ok) {
+      showAuthErr(data.error || 'Błąd serwera');
+      btn.disabled = false;
+      btn.textContent = authTab === 'login' ? 'Zaloguj się' : 'Zarejestruj';
+      return;
+    }
+
+    if (authTab === 'register') {
+      // po rejestracji automatycznie zaloguj
+      authSwitchTab('login');
+      document.getElementById('auth-pass').value = '';
+      showAuthErr('');
+      document.getElementById('auth-err').classList.remove('show');
+      btn.disabled = false;
+      btn.textContent = 'Zaloguj się';
+      // auto-login
+      document.getElementById('auth-user').value = username;
+      setTimeout(authSubmit, 100);
+      return;
+    }
+
+    // Zalogowano
+    authToken = data.token;
+    authUsername = data.username;
+    localStorage.setItem('ironlog_token', authToken);
+    localStorage.setItem('ironlog_user', authUsername);
+    await onLogin();
+
+  } catch (e) {
+    showAuthErr('Nie można połączyć z serwerem. Sprawdź adres API_BASE.');
+    btn.disabled = false;
+    btn.textContent = authTab === 'login' ? 'Zaloguj się' : 'Zarejestruj';
+  }
+}
+
+async function onLogin() {
+  document.getElementById('auth-screen').style.display = 'none';
+  renderUserChip();
+  // Wczytaj dane z serwera
+  await pullFromServer();
+  renderPlansList();
+  renderMain();
+  renderCalendar();
+}
+
+function renderUserChip() {
+  const wrap = document.getElementById('user-chip-wrap');
+  if (!authUsername || !wrap) return;
+  wrap.innerHTML = `
+    <div class="user-chip" onclick="logout()" title="Wyloguj">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      <span class="user-chip-name">${authUsername}</span>
+      <span class="user-chip-out">WYLOGUJ</span>
+    </div>`;
+}
+
+function logout() {
+  if (!confirm('Wylogować się? Dane są zapisane na serwerze.')) return;
+  localStorage.removeItem('ironlog_token');
+  localStorage.removeItem('ironlog_user');
+  authToken = null; authUsername = null;
+  document.getElementById('auth-screen').style.display = '';
+  document.getElementById('user-chip-wrap').innerHTML = '';
+  document.getElementById('auth-pass').value = '';
+  document.getElementById('auth-err').classList.remove('show');
+}
+
+// ════════════════════════════════════════
+// SYNC
+// ════════════════════════════════════════
+let syncTimer = null;
+let syncBarTimer = null;
+
+function showSyncBar(status, msg) {
+  const bar = document.getElementById('sync-bar');
+  const dot = document.getElementById('sync-dot');
+  const msgEl = document.getElementById('sync-msg');
+  dot.className = 'sync-dot ' + status;
+  msgEl.textContent = msg;
+  bar.classList.add('show');
+  clearTimeout(syncBarTimer);
+  if (status !== 'syncing') {
+    syncBarTimer = setTimeout(() => bar.classList.remove('show'), 2500);
+  }
+}
+
+async function pushToServer() {
+  if (!authToken) return;
+  showSyncBar('syncing', 'Synchronizacja...');
+  try {
+    const res = await fetch(API_BASE + '/api/sync', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + authToken },
+      body: JSON.stringify({ data: state })
+    });
+    if (res.status === 401) { logout(); return; }
+    if (!res.ok) throw new Error('Server error');
+    showSyncBar('ok', 'Zapisano ✓');
+  } catch (e) {
+    showSyncBar('err', 'Błąd synchronizacji');
+  }
+}
+
+async function pullFromServer() {
+  if (!authToken) return;
+  showSyncBar('syncing', 'Pobieranie danych...');
+  try {
+    const res = await fetch(API_BASE + '/api/sync', {
+      headers: { 'Authorization': 'Bearer ' + authToken }
+    });
+    if (res.status === 401) { logout(); return; }
+    const json = await res.json();
+    if (json.data) {
+      state = json.data;
+      // Recalculate counters
+      idCounter = state.plans.length ? Math.max(...state.plans.map(p=>p.id))+1 : 1;
+      exIdCounter = 1;
+      state.plans.forEach(p => p.exercises.forEach(e => {
+        if (!e.id) e.id = exIdCounter++;
+        else if (e.id >= exIdCounter) exIdCounter = e.id+1;
+      }));
+      localStorage.setItem('ironlog_v3', JSON.stringify(state));
+    }
+    showSyncBar('ok', 'Zsynchronizowano ✓');
+  } catch (e) {
+    showSyncBar('err', 'Brak połączenia z serwerem');
+  }
+}
+
+// ── Auto-sync z debounce po każdej zmianie ──
+function saveState() {
+  try { localStorage.setItem('ironlog_v3', JSON.stringify(state)); } catch(e){}
+  if (authToken) {
+    clearTimeout(syncTimer);
+    syncTimer = setTimeout(pushToServer, 1500); // debounce 1.5s
+  }
+}
+
 // ════════════════════════════════════════
 // STATE
 // state.plans = [ { id, name, exercises:[] } ]
@@ -601,7 +895,6 @@ state.plans.forEach(p => p.exercises.forEach(e => {
   else if (e.id >= exIdCounter) exIdCounter = e.id+1;
 }));
 
-function saveState() { try { localStorage.setItem('ironlog_v3', JSON.stringify(state)); } catch(e){} }
 function loadState() { try { const s=localStorage.getItem('ironlog_v3'); return s?JSON.parse(s):null; } catch(e){return null;} }
 
 // VIEW STATE
@@ -1014,9 +1307,17 @@ document.querySelectorAll('.overlay').forEach(o=>o.addEventListener('click',e=>{
 function goLink(url) { if(url&&(url.startsWith('http://')||url.startsWith('https://'))) window.open(url,'_blank'); }
 
 // ── INIT ──
-renderPlansList();
-renderMain();
-renderCalendar();
+// Sprawdź czy mamy token – jeśli tak, zaloguj od razu
+(async function init() {
+  if (authToken) {
+    document.getElementById('auth-screen').style.display = 'none';
+    renderUserChip();
+    await pullFromServer();
+  }
+  renderPlansList();
+  renderMain();
+  renderCalendar();
+})();
 </script>
 </body>
 </html>
